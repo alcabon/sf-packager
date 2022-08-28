@@ -64,12 +64,12 @@ program
             const operation = fileName.slice(0,1);
             // remove the operation and spaces from fileName
             fileName = fileName.slice(1).trim();
-
+          
             //ensure file is inside of src directory of project
-            if (fileName && fileName.substring(0,3) === 'src') {
+            if (fileName && fileName.substring(0,9) === 'force-app') {
 
                 //ignore changes to the package.xml file
-                if(fileName === 'src/package.xml') {
+                if(fileName.includes('package.xml')) {
                     return;
                 }
 
@@ -88,7 +88,7 @@ program
                     meta = parts[2] + '/' + parts[3].split('.')[0];
                 } else {
                     // Processing metadata without nested folders. Strip -meta from the end.
-                    meta = parts[2].split('.')[0].replace('-meta', '');
+                    meta = parts[4].split('.')[0].replace('-meta', '');
                 }
 
                 if (operation === 'A' || operation === 'M') {
@@ -96,24 +96,24 @@ program
                     console.log('File was added or modified: %s', fileName);
                     fileListForCopy.push(fileName);
 
-                    if (!metaBag.hasOwnProperty(parts[1])) {
-                        metaBag[parts[1]] = [];
+                    if (!metaBag.hasOwnProperty(parts[3])) {
+                        metaBag[parts[3]] = [];
                     }
 
-                    if (metaBag[parts[1]].indexOf(meta) === -1) {
-                        metaBag[parts[1]].push(meta);
+                    if (metaBag[parts[3]].indexOf(meta) === -1) {
+                        metaBag[parts[3]].push(meta);
                     }
                 } else if (operation === 'D') {
                     // file was deleted
                     console.log('File was deleted: %s', fileName);
                     deletesHaveOccurred = true;
 
-                    if (!metaBagDestructive.hasOwnProperty(parts[1])) {
-                        metaBagDestructive[parts[1]] = [];
+                    if (!metaBagDestructive.hasOwnProperty(parts[3])) {
+                        metaBagDestructive[parts[3]] = [];
                     }
 
-                    if (metaBagDestructive[parts[1]].indexOf(meta) === -1) {
-                        metaBagDestructive[parts[1]].push(meta);
+                    if (metaBagDestructive[parts[3]].indexOf(meta) === -1) {
+                        metaBagDestructive[parts[3]].push(meta);
                     }
                 } else {
                     // situation that requires review
