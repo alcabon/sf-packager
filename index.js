@@ -69,7 +69,7 @@ program
             if (fileName && fileName.substring(0,9) === 'force-app') {
 
                 //ignore changes to the package.xml file
-                if(fileName.includes('package.xml')) {
+                if(fileName.includes('/manifest/package')) {
                     return;
                 }
 
