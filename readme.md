@@ -32,6 +32,10 @@ You can also just write the package.xml and destructiveChanges.xml by passing th
 sfpackage destinationBranch sourceBranch -d > ~/Desktop/packageAndDestructiveChanges.xml
 ```
 
+```
+PS C:\projects\projectname> sfpackage develop feature/myrequest -p 53 -d > ./manifest/package_myrequest.xml
+```
+
 You can also create "backout" content by reversing the order of the destination and source branches
 
 ```
